@@ -1,0 +1,16 @@
+# Python environment and build files
+.venv/
+__pycache__/
+*.pyc
+dist/
+build/
+
+# IDE/PyCharm files
+.idea/
+*.iml
+
+# Data and Artifacts (Crucial for CI/CD)
+data/raw/
+data/processed/
+mlruns/
+*.db

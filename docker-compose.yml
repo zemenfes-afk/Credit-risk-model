@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  credit-risk-api:
+    build: .
+    container_name: credit_risk_api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount the MLflow database/artifact storage if needed for persistence
+      - ./mlruns:/app/mlruns
+    # Ensure this service starts only after the model is trained and registered
+    command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000

@@ -1,0 +1,28 @@
+#📝 Task 1: Credit Scoring Business Understanding (README.md Content)##🎯 Credit Scoring Business Understanding###1. Basel II and Model Interpretability**How does the Basel II Accord’s emphasis on risk measurement influence our need for an interpretable and well-documented model?**
+
+The Basel Accords, particularly Basel II, require banks to have sound internal processes for assessing their overall capital adequacy in relation to their risk profile and strategy. This is known as the Supervisory Review Process (Pillar 2).
+
+* **Risk-Sensitive Capital Requirements:** Basel II allows financial institutions to use their own internal credit risk models under the Advanced Internal Ratings-Based (AIRB) approach to derive key risk parameters like Probability of Default (PD), Loss Given Default (LGD), and Exposure at Default (EAD).
+* **Need for Interpretability and Documentation:** Since banks can use their own models to calculate the minimum capital required to cover potential losses, these models are subject to the validation and approval of the supervisors. The supervisory review covers various aspects, including the governance, policies, procedures, **models**, data, and **validation**.
+* **Implication for Our Model:** Our credit risk model must be **interpretable** (or easily explainable) to demonstrate that the risk metrics (like the probability of high risk) are calculated reliably and logically. This documentation is crucial for both internal governance and external supervisory review (Pillar 2). An interpretable model allows regulators to easily audit the credit risk identification, measurement, and reporting processes.
+
+###2. Proxy Variable Justification**Since we lack a direct "default" label, why is creating a proxy variable necessary, and what are the potential business risks of making predictions based on this proxy?**
+
+* **Necessity of a Proxy:** Credit risk management is defined by identifying, measuring, and mitigating the risk of losses due to a borrower's failure to repay. Our goal is to predict the **Probability of Default (PD)**. Since the provided transaction data does not include a direct historical column clearly labeling a customer as having officially "defaulted," a **proxy variable** (like the RFM-based 'is_high_risk') is necessary to define the target outcome for training the predictive model.
+* **Potential Business Risks of a Proxy:** The primary risk is that the proxy variable (e.g., identifying "disengaged customers" as high-risk) may not accurately reflect an actual, regulatory definition of default.
+* **Model Risk:** The model's predictions might not align with true credit risk, leading to *Model Risk*.
+* **Credit Rationing:** If the proxy is too conservative (labels too many customers as high risk), it could cause the bank to reject creditworthy customers ("false positives"), leading to a reduction in lending capacity and lost profitability.
+* **Underestimation of Risk:** If the proxy is too lenient (misses actual high-risk customers), the bank may underestimate the required capital to cover potential losses, violating the minimum capital requirements (Pillar 1).
+
+
+
+###3. Model Trade-offs (LR vs. GBM)**What are the key trade-offs between using a simple, interpretable model (like Logistic Regression with WoE) versus a complex, high-performance model (like Gradient Boosting) in a regulated financial context?**
+
+| Feature | Logistic Regression (WoE) | Gradient Boosting (GBM) | Implication for Bati Bank |
+| --- | --- | --- | --- |
+| **Interpretability** | **High** | **Low** (Black Box) | **LR is preferred for initial regulatory compliance (Pillar 2)**, as it is easy to explain how features (WoE values) lead to a risk score, aiding in validation and dialogue with supervisors. |
+| **Performance** | Typically **Lower** | Typically **Higher** | **GBM offers superior accuracy (PD estimation)**, which is valuable for more **risk-sensitive** capital calculation under the Advanced IRB approach (Pillar 1). |
+| **Model Risk** | **Lower** | **Higher** | Complex models like GBM have a greater risk of arbitrary or subjective assumptions, introducing **model risk** and requiring more rigorous governance, oversight, and validation. |
+| **Implementation** | **Simpler**, faster training. | **More Complex**, requires more sophisticated systems and higher implementation costs. | Given the need for robust governance and validation, starting with a simpler LR model can establish a solid, explainable foundation before transitioning to a higher-performing but complex GBM. |
+
+---
